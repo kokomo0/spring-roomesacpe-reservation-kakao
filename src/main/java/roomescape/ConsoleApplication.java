@@ -16,7 +16,7 @@ public class ConsoleApplication {
 
     private static ReservationDaoConsole reservationDAO = new ReservationDaoConsole();
 
-    public static void main(String[] args) {
+    public static void main2(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 

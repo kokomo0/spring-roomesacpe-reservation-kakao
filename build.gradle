@@ -1,8 +1,23 @@
 plugins {
+    id 'com.google.cloud.tools.jib' version '3.3.1'
     id 'org.springframework.boot' version '2.7.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
+
+jib {
+    from {
+        image = 'adoptopenjdk/openjdk11'
+    }
+    to {
+        image = 'idock.daumkakao.io/onboarding2023/kayla.park'
+        tags = ['latest']
+    }
+    container {
+        ports = ["8080"]
+    }
+}
+
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
