@@ -4,8 +4,8 @@ import roomescape.reservation.exception.BusinessException;
 import roomescape.reservation.domain.Reservation;
 import roomescape.reservation.domain.Theme;
 import roomescape.reservation.dto.ReservationDto;
-import roomescape.reservation.repository.console.ReservationRepositoryConsole;
-import roomescape.reservation.repository.console.ThemeRepositoryConsole;
+import roomescape.reservation.repository.console.JdbcReservationRepository;
+import roomescape.reservation.repository.console.JdbcThemeRepository;
 import roomescape.reservation.service.ReservationService;
 import roomescape.reservation.service.ThemeService;
 
@@ -18,8 +18,8 @@ public class ConsoleApplication {
     private static final String DELETE = "delete";
     private static final String SHOW = "show";
     private static final String QUIT = "quit";
-    private static final ReservationService reservationService = new ReservationService(new ReservationRepositoryConsole(), new ThemeRepositoryConsole());
-    private static final ThemeService themeService = new ThemeService(new ThemeRepositoryConsole());
+    private static final ReservationService reservationService = new ReservationService(new JdbcReservationRepository(), new JdbcThemeRepository());
+    private static final ThemeService themeService = new ThemeService(new JdbcThemeRepository());
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

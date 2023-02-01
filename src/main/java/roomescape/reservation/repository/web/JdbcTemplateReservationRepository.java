@@ -6,18 +6,18 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import roomescape.reservation.domain.Reservation;
-import roomescape.reservation.repository.common.AbstractReservationH2Repository;
-import roomescape.reservation.repository.common.ReservationMapper;
+import roomescape.reservation.repository.AbstractReservationH2Repository;
+import roomescape.reservation.repository.ReservationMapper;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class ReservationRepositoryWeb extends AbstractReservationH2Repository {
+public class JdbcTemplateReservationRepository extends AbstractReservationH2Repository {
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert insertActor;
 
-    public ReservationRepositoryWeb(JdbcTemplate jdbcTemplate, DataSource dataSource) {
+    public JdbcTemplateReservationRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) {
         this.jdbcTemplate = jdbcTemplate;
         this.insertActor = new SimpleJdbcInsert(dataSource)
                 .withTableName("reservation")

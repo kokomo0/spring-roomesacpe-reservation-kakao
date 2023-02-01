@@ -1,4 +1,4 @@
-package roomescape.reservation.repository.common;
+package roomescape.reservation.repository;
 
 import roomescape.reservation.domain.Reservation;
 

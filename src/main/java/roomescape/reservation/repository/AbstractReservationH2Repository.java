@@ -1,4 +1,4 @@
-package roomescape.reservation.repository.common;
+package roomescape.reservation.repository;
 
 public abstract class AbstractReservationH2Repository implements ReservationRepository {
     protected String insertQuery = "INSERT INTO RESERVATION (date, time, name, theme_id) VALUES (?, ?, ?, ?)";

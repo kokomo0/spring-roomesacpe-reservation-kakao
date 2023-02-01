@@ -1,14 +1,12 @@
 package roomescape.reservation.repository.console;
 
-import roomescape.reservation.domain.Theme;
-import roomescape.reservation.repository.common.AbstractThemeH2Repository;
-import roomescape.reservation.repository.common.ThemeMapper;
+import roomescape.reservation.domain.Reservation;
+import roomescape.reservation.repository.AbstractReservationH2Repository;
+import roomescape.reservation.repository.ReservationMapper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ThemeRepositoryConsole extends AbstractThemeH2Repository {
+public class JdbcReservationRepository extends AbstractReservationH2Repository {
 
     private Connection getConnection() {
         Connection con = null;
@@ -32,18 +30,19 @@ public class ThemeRepositoryConsole extends AbstractThemeH2Repository {
     }
 
     @Override
-    public Theme add(Theme theme) {
+    public Reservation add(Reservation reservation) {
         Connection con = getConnection();
         try {
             PreparedStatement ps = con.prepareStatement(insertQuery, new String[]{"id"});
-            ps.setString(1, theme.getName());
-            ps.setString(2, theme.getDesc());
-            ps.setInt(3, theme.getPrice());
+            ps.setDate(1, Date.valueOf(reservation.getDate()));
+            ps.setTime(2, Time.valueOf(reservation.getTime()));
+            ps.setString(3, reservation.getName());
+            ps.setLong(4, reservation.getThemeId());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
-            theme.setId(rs.getLong("id"));
-            return theme;
+            reservation.setId(rs.getLong("id"));
+            return reservation;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,33 +53,14 @@ public class ThemeRepositoryConsole extends AbstractThemeH2Repository {
     }
 
     @Override
-    public List<Theme> get() {
-        Connection con = getConnection();
-        List<Theme> themes = new ArrayList<>();
-        try {
-            PreparedStatement ps = con.prepareStatement(selectQuery);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                themes.add(new ThemeMapper().mapRow(rs, rs.getRow()));
-            }
-            if (themes.isEmpty()) return null;
-            return themes;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(con);
-        }
-    }
-
-    @Override
-    public Theme get(Long id) {
+    public Reservation get(Long id) {
         Connection con = getConnection();
         try {
             PreparedStatement ps = con.prepareStatement(selectByIdQuery);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new ThemeMapper().mapRow(rs, rs.getRow());
+                return new ReservationMapper().mapRow(rs, rs.getRow());
             }
             return null;
         } catch (SQLException e) {
@@ -91,14 +71,15 @@ public class ThemeRepositoryConsole extends AbstractThemeH2Repository {
     }
 
     @Override
-    public Theme get(String name) {
+    public Reservation get(String date, String time) {
         Connection con = getConnection();
         try {
-            PreparedStatement ps = con.prepareStatement(selectByNameQuery);
-            ps.setString(1, name);
+            PreparedStatement ps = con.prepareStatement(selectByDateAndTimeQuery);
+            ps.setString(1, date);
+            ps.setString(2, time);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new ThemeMapper().mapRow(rs, rs.getRow());
+                return new ReservationMapper().mapRow(rs, rs.getRow());
             }
             return null;
         } catch (SQLException e) {

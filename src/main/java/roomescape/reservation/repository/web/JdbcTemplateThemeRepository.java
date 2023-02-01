@@ -6,18 +6,18 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import roomescape.reservation.domain.Theme;
-import roomescape.reservation.repository.common.AbstractThemeH2Repository;
-import roomescape.reservation.repository.common.ThemeMapper;
+import roomescape.reservation.repository.AbstractThemeH2Repository;
+import roomescape.reservation.repository.ThemeMapper;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class ThemeRepositoryWeb extends AbstractThemeH2Repository {
+public class JdbcTemplateThemeRepository extends AbstractThemeH2Repository {
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert insertActor;
 
-    ThemeRepositoryWeb(JdbcTemplate jdbcTemplate, DataSource dataSource) {
+    JdbcTemplateThemeRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) {
         this.jdbcTemplate = jdbcTemplate;
         this.insertActor = new SimpleJdbcInsert(dataSource)
                 .withTableName("theme")

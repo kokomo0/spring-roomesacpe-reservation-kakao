@@ -1,4 +1,4 @@
-package roomescape.reservation.repository.common;
+package roomescape.reservation.repository;
 
 public abstract class AbstractThemeH2Repository implements ThemeRepository {
     protected String insertQuery = "INSERT INTO THEME (name, desc, price) VALUES (?, ?, ?)";

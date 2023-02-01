@@ -1,4 +1,4 @@
-package roomescape.reservation.repository.common;
+package roomescape.reservation.repository;
 
 import org.springframework.jdbc.core.RowMapper;
 import roomescape.reservation.domain.Theme;

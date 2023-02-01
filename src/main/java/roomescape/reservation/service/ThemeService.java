@@ -3,7 +3,7 @@ package roomescape.reservation.service;
 import org.springframework.stereotype.Service;
 import roomescape.reservation.exception.BusinessException;
 import roomescape.reservation.exception.ErrorCode;
-import roomescape.reservation.repository.common.ThemeRepository;
+import roomescape.reservation.repository.ThemeRepository;
 import roomescape.reservation.domain.Theme;
 import roomescape.reservation.dto.ThemeDto;
 
