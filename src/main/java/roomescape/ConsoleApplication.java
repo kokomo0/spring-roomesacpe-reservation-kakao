@@ -1,9 +1,13 @@
 package roomescape;
 
+import roomescape.reservation.domain.ValidationReservation;
+import roomescape.reservation.domain.ValidationTheme;
 import roomescape.reservation.exception.BusinessException;
 import roomescape.reservation.domain.Reservation;
 import roomescape.reservation.domain.Theme;
 import roomescape.reservation.dto.ReservationDto;
+import roomescape.reservation.repository.ReservationRepository;
+import roomescape.reservation.repository.ThemeRepository;
 import roomescape.reservation.repository.console.JdbcReservationRepository;
 import roomescape.reservation.repository.console.JdbcThemeRepository;
 import roomescape.reservation.service.ReservationService;
@@ -18,8 +22,20 @@ public class ConsoleApplication {
     private static final String DELETE = "delete";
     private static final String SHOW = "show";
     private static final String QUIT = "quit";
-    private static final ReservationService reservationService = new ReservationService(new JdbcReservationRepository(), new JdbcThemeRepository());
-    private static final ThemeService themeService = new ThemeService(new JdbcThemeRepository());
+
+    /**
+     *
+     */
+    private static final ReservationRepository reservationRepository = new JdbcReservationRepository();
+    private static final ThemeRepository themeRepository = new JdbcThemeRepository();
+    private static final ReservationService reservationService = new ReservationService(reservationRepository, new ValidationReservation(reservationRepository), new ValidationTheme(themeRepository));
+    private static final ThemeService themeService = new ThemeService(themeRepository, new ValidationTheme(themeRepository));
+
+//    private static final ReservationService reservationService = new ReservationService(new JdbcReservationRepository(),
+//            new ValidationReservation(new JdbcReservationRepository()),
+//            new ValidationTheme(new JdbcThemeRepository()));
+//    private static final ThemeService themeService = new ThemeService(new JdbcThemeRepository(),
+//            new ValidationTheme(new JdbcThemeRepository()));
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
